@@ -52,9 +52,12 @@ class EmailVerifyRecord(models.Model):
     code = models.CharField(max_length=20, verbose_name=u"验证码")
     # 未设置null = True， blank = True 默认不为空
     email = models.EmailField(max_length=50, verbose_name=u"邮箱")
-    send_type = models.CharField(choices=SEND_CHOICES, max_length=10)
+    send_type = models.CharField(choices=SEND_CHOICES, max_length=10, verbose_name=u"发送类型")
     # 这里的now得去掉(),不去掉会根据编译时间，而不是根据实例化时间。
-    send_time = models.DateTimeField(default=datetime.now)
+    send_time = models.DateTimeField(default=datetime.now, verbose_name=u"发送时间")
+
+    def __str__(self):
+        return '{0}({1})'.format(self.code, self.email)
 
     class Meta:
         verbose_name = u"邮箱验证码"
