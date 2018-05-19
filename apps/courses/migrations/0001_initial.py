@@ -40,7 +40,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=100, verbose_name='名称')),
                 ('download', models.FileField(upload_to='course/resource/%Y/%m', verbose_name='资源文件')),
                 ('add_time', models.DateTimeField(default=datetime.datetime.now, verbose_name='该资源添加的时间')),
-                ('course', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='apps.courses.Course', verbose_name='课程')),
+                ('course', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='courses.Course', verbose_name='课程')),
             ],
             options={
                 'verbose_name': '课程资源',
@@ -53,7 +53,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=100, verbose_name='章节名')),
                 ('add_time', models.DateTimeField(default=datetime.datetime.now, verbose_name='章节添加的时间')),
-                ('course', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='apps.courses.Course', verbose_name='课程')),
+                ('course', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='courses.Course', verbose_name='课程')),
             ],
             options={
                 'verbose_name': '章节',
@@ -66,7 +66,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=100, verbose_name='视频名')),
                 ('add_time', models.DateTimeField(default=datetime.datetime.now, verbose_name='该视频添加的时间')),
-                ('lesson', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='apps.courses.Lesson', verbose_name='章节')),
+                ('lesson', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='courses.Lesson', verbose_name='章节')),
             ],
             options={
                 'verbose_name': '视频',

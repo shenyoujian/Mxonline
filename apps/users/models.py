@@ -17,7 +17,7 @@ class UserProfile(AbstractUser):
         birthday = models.DateField(null=True, blank=True, verbose_name=u"生日")
         # 性别 只能男或女，默认女
         gender = models.CharField(
-            max_length=5,
+            max_length=6,
             choices=GENDER_CHOICES,
             default="female",
             verbose_name=u"性别"
