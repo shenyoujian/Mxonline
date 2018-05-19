@@ -27,7 +27,7 @@ class Course(models.Model):
     )
     # 保存点击量，点击页面就算
     click_nums = models.IntegerField(default=0, verbose_name=u"点击数")
-    add_time = models = models.DateTimeField(default=datetime.now, verbose_name=u"课程添加的时间")
+    add_time  = models.DateTimeField(default=datetime.now, verbose_name=u"课程添加的时间")
 
     class Meta:
         verbose_name = u"课程"
@@ -38,7 +38,7 @@ class Course(models.Model):
 class Lesson(models.Model):
     # 因为一个课程对应很多章节。所以在章节表中将课程设置为外键。
     # 作为一个字段来让我们可以知道这个章节对应那个课程
-    course = models.ForeignKey(Course, verbose_name=u"课程")
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name=u"课程")
     name = models.CharField(max_length=100, verbose_name=u"章节名")
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"章节添加的时间")
 
@@ -51,7 +51,7 @@ class Lesson(models.Model):
 class Video(models.Model):
     # 因为一个章节对应很多视频。所以在视频表中将章节设置为外键。
     # 作为一个字段来存储让我们可以知道这个视频对应哪个章节.
-    lesson = models.ForeignKey(Lesson, verbose_name=u"章节")
+    lesson = models.ForeignKey(Lesson,  on_delete=models.CASCADE, verbose_name=u"章节")
     name = models.CharField(max_length=100, verbose_name=u"视频名")
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"该视频添加的时间")
 
@@ -64,7 +64,7 @@ class Video(models.Model):
 class CourseResource(models.Model):
     # 因为一个课程对应很多资源。所以在课程资源表中将课程设置为外键。
     # 作为一个字段来让我们可以知道这个资源对应那个课程
-    course = models.ForeignKey(Course, verbose_name=u"课程")
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name=u"课程")
     name = models.CharField(max_length=100, verbose_name=u"名称")
     # 这里定义成文件类型的field，后台管理系统中会直接有上传的按钮。
     # FileField也是一个字符串类型，要指定最大长度。
