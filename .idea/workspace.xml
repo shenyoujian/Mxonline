@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="eed0b905-4ea0-423b-a36c-820d9e20b648" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/apps/users/adminx.py" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/apps/users/models.py" afterPath="$PROJECT_DIR$/apps/users/models.py" />
-      <change beforePath="$PROJECT_DIR$/extra_apps/xadmin/plugins/export.py" afterPath="$PROJECT_DIR$/extra_apps/xadmin/plugins/export.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -363,7 +360,14 @@
       <option name="project" value="LOCAL" />
       <updated>1526725955706</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="5.3 usersmodels三张表注册进xadmin, 配置搜索过滤展示字段，修复xadmin导出csv乱码，修复django2.0.1的indexError, str重载。">
+      <created>1526742855454</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1526742855454</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -407,7 +411,8 @@
     <MESSAGE value="4-8&amp;4-9 operation下的models设计,用户: 课程&amp;消息&amp;收藏&amp;评论&amp;我要学习.并在setting中进行了注册，数据表生成以及apps目录建立。" />
     <MESSAGE value="5-1 admin中添加管理器&amp;注册。时区,语言,utc(False).数据库中选项参数。female的长度修改, createsuperuser" />
     <MESSAGE value="5-2 Xadmin的安装与源码安装，配置setting中extra_apps." />
-    <option name="LAST_COMMIT_MESSAGE" value="5-2 Xadmin的安装与源码安装，配置setting中extra_apps." />
+    <MESSAGE value="5.3 usersmodels三张表注册进xadmin, 配置搜索过滤展示字段，修复xadmin导出csv乱码，修复django2.0.1的indexError, str重载。" />
+    <option name="LAST_COMMIT_MESSAGE" value="5.3 usersmodels三张表注册进xadmin, 配置搜索过滤展示字段，修复xadmin导出csv乱码，修复django2.0.1的indexError, str重载。" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
