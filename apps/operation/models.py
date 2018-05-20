@@ -14,6 +14,9 @@ class UserAsk(models.Model):
     course_name = models.CharField(max_length=50, verbose_name=u"课程名")
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"添加时间")
 
+    def __str__(self):
+        return '{0}对{1}的咨询 '.format(self.name, self.course_name)
+
     class Meta:
         verbose_name = u"用户咨询"
         verbose_name_plural = verbose_name
@@ -27,6 +30,9 @@ class CourseComments(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, verbose_name=u"用户")
     comments = models.CharField(max_length=250, verbose_name=u"评论")
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"添加时间")
+
+    def __str__(self):
+        return '{0}对{1}课程的评论'.format(self.user, self.course)
 
     class Meta:
         verbose_name = u"课程评论"
@@ -50,13 +56,17 @@ class UserFavorite(models.Model):
 
     # 机智版
     # 直接保存用户id
-    fav_id = models.IntegerField(default=0)
+    fav_id = models.IntegerField(default=0, verbose_name=u"收藏id")
     # 表明收藏的是哪种类型
     fav_type = models.IntegerField(
         choices=TYPE_CHOICES,
         default=1,
         verbose_name=u"收藏类型",
     )
+    add_time = models.DateTimeField(default=datetime.now, verbose_name=u"添加时间")
+
+    def __str__(self):
+        return self.fav_id
 
     class Meta:
         verbose_name = u"用户收藏"
@@ -76,6 +86,9 @@ class UserMessage(models.Model):
     has_read = models.BooleanField(default=False, verbose_name=u"是否已读")
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"添加时间")
 
+    def __str__(self):
+        return self.message
+
     class Meta:
         verbose_name = u"用户消息"
         verbose_name_plural = verbose_name
@@ -87,6 +100,9 @@ class UserCourse(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name=u"课程")
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, verbose_name=u"用户")
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"添加时间")
+
+    def __str__(self):
+        return '用户{0}-课程{1}'.format(self.user, self.course)
 
     class Meta:
         verbose_name = u"用户课程"

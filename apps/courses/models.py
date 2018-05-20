@@ -14,7 +14,7 @@ class Course(models.Model):
     desc = models.CharField(max_length=300, verbose_name=u"课程描述")
     # TextField允许我们不输入长度。可以输入到无限大。暂时定义为TextFiled，之后更新为富文本
     detail = models.TextField(verbose_name=u"课程详情")
-    degree = models.CharField(max_length=2, choices=DEGREE_CHOICES)
+    degree = models.CharField(max_length=2, choices=DEGREE_CHOICES, verbose_name=u"课程等级")
     # 使用分钟做后台记录(存储最小单位)前台转换
     learn_times = models.IntegerField(default=0, verbose_name=u"学习时长(分钟数)")
     # 保存学习的人数：点击开始学习才算
@@ -29,6 +29,9 @@ class Course(models.Model):
     click_nums = models.IntegerField(default=0, verbose_name=u"点击数")
     add_time  = models.DateTimeField(default=datetime.now, verbose_name=u"课程添加的时间")
 
+    def __str__(self):
+        return '{0}'.format(self.name)
+
     class Meta:
         verbose_name = u"课程"
         verbose_name_plural = verbose_name
@@ -41,6 +44,9 @@ class Lesson(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name=u"课程")
     name = models.CharField(max_length=100, verbose_name=u"章节名")
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"章节添加的时间")
+
+    def __str__(self):
+        return '《{0}》课程的章节 >> {1}'.format(self.course, self.name)
 
     class Meta:
         verbose_name = u"章节"

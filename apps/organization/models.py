@@ -11,6 +11,9 @@ class CityDict(models.Model):
     desc = models.CharField(max_length=200, verbose_name=u"描述")
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"添加时间")
 
+    def __str__(self):
+        return '{0}'.format(self.name)
+
     class Meta:
         verbose_name = u"城市"
         verbose_name_plural = verbose_name
@@ -34,6 +37,9 @@ class CourseOrg(models.Model):
     city = models.ForeignKey(CityDict, on_delete=models.CASCADE, verbose_name=u"所在城市")
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"添加该机构的时间")
 
+    def __str__(self):
+        return '{0}'.format(self.name)
+
     class Meta:
         verbose_name = u"课程机构"
         verbose_name_plural = verbose_name
@@ -52,6 +58,9 @@ class Teacher(models.Model):
     click_nums = models.IntegerField(default=0, verbose_name=u"点击数")
     fav_nums = models.IntegerField(default=0, verbose_name=u"收藏数")
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"添加时间")
+
+    def __str__(self):
+        return '{0}'.format(self.name)
 
     class Meta:
         verbose_name = u"教师"
