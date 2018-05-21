@@ -1,10 +1,44 @@
 from django.shortcuts import render
+# django自带auth框架的函数
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.backends import ModelBackend
+from django.views.generic.base import View
 from .models import UserProfile
 # 并集运算
 from django.db.models import Q
+# 导入自定义验证表单
+from .forms import LoginForm
 # Create your views here.
+
+
+# 基于类实现需要继承的view
+class LoginView(View):
+    # 直接调用get方法免去判断
+    def get(self, request):
+        return render(request, "login.html", {})
+
+    def post(self, request):
+        # 类实例化需要一个字典参数dict:request.POST就是一个QueryDict所以直接传入
+        # POST中的usernamepassword会对应到form中
+        login_form = LoginForm(request.POST)
+        # is_valid判断我们字段是否有错执行我们原有逻辑，验证失败就跳回login页面
+        if login_form.is_valid():
+            # 取不到时为空，username， password为前端页面name值
+            user_name = request.POST.get("username", "")
+            pass_word = request.POST.get("password", "")
+
+            user = authenticate(username = user_name, password = pass_word)
+
+            if user is not None:
+                login(request, user)
+                return render(request, "index.html")
+            # 仅当用户真的密码出错时
+            else:
+                return render(request, "login.html", {"msg":"用户名或密码错误!"})
+        # 验证不成功跳回登录页面
+        # 没有成功说明里面的值是None,并再次跳转回主页面
+        else:
+            return render(request, "login.html", {"login_form": login_form})
 
 
 # 当我们配置url被这个view处理时，自动传入request对象
