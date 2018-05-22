@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'organization',
     'xadmin',
     'crispy_forms',
+    'captcha',
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -150,3 +151,10 @@ AUTHENTICATION_BACKENDS = (
     'users.views.CustomBackend',
 )
 
+# 发送邮件的setting设置
+EMAIL_HOST = "smtp.qq.com"
+EMAIL_PORT = 465
+EMAIL_HOST_USER = "1126203581@qq.com"
+EMAIL_HOST_PASSWORD = "hitubmkibtcthchf"
+EMAIL_USE_SSL= True
+EMAIL_FROM = "1126203581@qq.com"

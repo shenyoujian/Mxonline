@@ -2,16 +2,19 @@ from django.shortcuts import render
 # django自带auth框架的函数
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.backends import ModelBackend
+from django.contrib.auth.hashers import make_password
 from django.views.generic.base import View
-from .models import UserProfile
+from .models import UserProfile, EmailVerifyRecord
 # 并集运算
 from django.db.models import Q
 # 导入自定义验证表单
-from .forms import LoginForm
+from .forms import LoginForm, RegisterForm, ActiveForm
+# 发送邮件
+from utils.email_send import send_register_email
 # Create your views here.
 
 
-# 基于类实现需要继承的view
+# 登录功能的view
 class LoginView(View):
     # 直接调用get方法免去判断
     def get(self, request):
@@ -39,6 +42,36 @@ class LoginView(View):
         # 没有成功说明里面的值是None,并再次跳转回主页面
         else:
             return render(request, "login.html", {"login_form": login_form})
+
+
+# 注册功能的view
+class RegisterView(View):
+    # get方法直接返回页面
+    def get(self, request):
+        # 添加验证码
+        register_form = RegisterForm()
+        return render(request, "register.html", {'register_form':register_form})
+
+    def post(self, request):
+        # 实例化form
+        register_form = RegisterForm(request.POST)
+        if register_form.is_valid():
+            user_name = request.POST.get("email", "")
+            pass_word = request.POST.get("password", "")
+
+            # 实例化一个user_profile对象，将前台值存入
+            user_profile = UserProfile()
+            user_profile.username = user_name
+            user_profile.email = user_name          # 因为只能使用邮箱注册
+
+            # 加密password进行保存
+            user_profile.password = make_password(pass_word)
+            # 修改默认的激活状态为fasle
+            user_profile.is_active = False
+            send_register_email(user_name, "register")
+            user_profile.save()
+
+        return render(request, "index.html")
 
 
 # 当我们配置url被这个view处理时，自动传入request对象
@@ -87,6 +120,29 @@ class CustomBackend(ModelBackend):
                 return user
         except Exception as e:
             return None
+
+
+# 激活用户的view
+class ActiveUserView(View):
+    def get(self, request, active_code):
+        # 查询邮箱验证码记录是否存在
+        all_record = EmailVerifyRecord.objects.filter(code=active_code)
+        # 激活form负责给激活跳转进来的人加验证
+        active_form = ActiveForm(request.GET)
+        # 如果不为空也就是有用户
+        if all_record:
+            for record in all_record:
+                # 获取到对应的邮箱
+                email = record.email
+                # 查找到邮箱对应的user
+                user = UserProfile.objects.get(email=email)
+                user.is_active = True
+                user.save()
+                # 激活成功跳转到登录页面
+                return render(request, "login.html")
+            # 验证码输错
+            else:
+                return render(request, "register.html", {"msg":"您的激活链接无效","active_form": active_form})
 
 
 
