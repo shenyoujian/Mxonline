@@ -30,6 +30,13 @@ class TeacherAdmin(object):
     list_filter = ['org__name', 'name', 'work_years', 'work_company', 'click_nums', 'fav_nums', 'add_time']
 
 
+# 机构课程信息管理器
+class CourseOrgAdmin(object):
+    list_display = ['name', 'desc', 'category', 'click_nums', 'fav_nums', 'add_time']
+    search_fields = ['name', 'desc', 'category', 'click_nums', 'fav_nums']
+    list_filter = ['name', 'desc', 'category', 'click_nums', 'fav_nums', 'address', 'add_time']
+
+
 xadmin.site.register(CityDict, CityDictAdmin)
 xadmin.site.register(CourseOrg, CourseOrgAdmin)
 xadmin.site.register(Teacher, TeacherAdmin)

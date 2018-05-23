@@ -7,9 +7,11 @@
 from random import Random
 from users.models import EmailVerifyRecord
 # 导入django自带的邮件模块
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMessage
 # 导入setting中发送邮件的配置
 from Mxonline.settings import EMAIL_FROM
+# 发送html格式的邮件
+from django.template import loader
 
 
 # 生成随机字符串
@@ -51,6 +53,18 @@ def send_register_email(email, send_type='register'):
         # 如果发送成功
         if send_status:
             pass
+
+    elif send_type == "forget":
+        email_title = "shenyoujian慕课小站 找回密码链接"
+        email_body = loader.render_to_string(
+            "email_forget.html",        # 需要渲染的html模板
+            {
+                "active_code": code     # 参数
+            }
+        )
+        msg = EmailMessage(email_title, email_body, EMAIL_FROM, [email])
+        msg.content_subtype = "html"
+        send_status = msg.send()
 
 
 

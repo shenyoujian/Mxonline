@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'xadmin',
     'crispy_forms',
     'captcha',
+    'pure_pagination',
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -75,6 +76,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # 添加图片处理器，为了在课程机构列表前面加上MEDIA_URL
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -158,3 +161,21 @@ EMAIL_HOST_USER = "1126203581@qq.com"
 EMAIL_HOST_PASSWORD = "hitubmkibtcthchf"
 EMAIL_USE_SSL= True
 EMAIL_FROM = "1126203581@qq.com"
+
+# 设置我们上传文件的路径
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# 设置分页参数
+PAGINATION_SETTINGS = {
+    'PAGE_RANGE_DISPLAYED': 10,   # 总共会显示多少个page(包括省略号，包括两边和中间)
+    'MARGIN_PAGES_DISPLAYED': 2,    # 是旁边会显示多少个
+    'SHOW_FIRST_PAGE_WHEN_INVALID': True,   # 当输入页数不合法是否要跳到第一页
+}
+
+
+
+
+
+
+
