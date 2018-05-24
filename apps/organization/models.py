@@ -28,7 +28,7 @@ class CourseOrg(models.Model):
     )
     name = models.CharField(max_length=50, verbose_name=u"机构名称")
     # 机构类别
-    category = models.CharField(max_length=20, default="pxjq", choices=ORG_CHOICES, verbose_name=u"机构类别")
+    category = models.CharField(max_length=20, default='pxjq', choices=ORG_CHOICES, verbose_name=u"机构类别")
     # 机构描述，后面会替换为富文本展示
     desc = models.TextField(verbose_name=u"机构描述")
     click_nums = models.IntegerField(default=0, verbose_name=u"点击数")
@@ -43,6 +43,10 @@ class CourseOrg(models.Model):
     # 可以让我们通过机构找到城市
     city = models.ForeignKey(CityDict, on_delete=models.CASCADE, verbose_name=u"所在城市")
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"添加该机构的时间")
+    # 当学生点击学习课程，找到所属机构，学习人数加1
+    students = models.IntegerField(default=0, verbose_name=u"学习人数")
+    # 当发布课程就加1
+    course_nums = models.IntegerField(default=0, verbose_name=u"课程数")
 
     def __str__(self):
         return '{0}'.format(self.name)
@@ -72,6 +76,10 @@ class Teacher(models.Model):
     class Meta:
         verbose_name = u"教师"
         verbose_name_plural = verbose_name
+
+
+
+
 
 
 

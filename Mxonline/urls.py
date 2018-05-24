@@ -18,7 +18,7 @@ from django.urls import path
 import xadmin
 from django.views.generic import TemplateView
 from users.views import LoginView, RegisterView, ActiveUserView, ForgetPwdView, ModifyPwdView, ResetView
-from organization.views import OrgView
+from organization.views import AddUserAskView
 from django.conf.urls import include, re_path
 from django.views.static import serve
 from  .settings import MEDIA_ROOT
@@ -39,8 +39,10 @@ urlpatterns = [
     re_path('reset/(?P<active_code>.*)/', ResetView.as_view(), name="reset_pwd"),
     # 修改密码url：用于passwordreset页面提交表单
     path('modify_pwd/', ModifyPwdView.as_view(), name="modify_pwd"),
+    # 课程机构app的url配置,使用命名空间防止重复
+    path("org/", include('organization.urls', namespace='org')),
     # 课程机构首页url
-    path('org_list/', OrgView.as_view(), name="org_list"),
+    # path('org_list/', OrgView.as_view(), name="org_list"),
     # 处理图片显示的url，使用django自带serve，传入参数告诉它会去哪个路径找，我们有配置路径MEDIAROOT
     re_path(r'^media/(?P<path>.*)', serve, {"document_root": MEDIA_ROOT }),
 ]
