@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import datetime
 from organization.models import CourseOrg
+from organization.models import Teacher
 # Create your models here.
 
 
@@ -32,6 +33,9 @@ class Course(models.Model):
     course_org = models.ForeignKey(CourseOrg, on_delete=models.CASCADE, verbose_name=u"所属机构", null=True, blank=True)
     category = models.CharField(max_length=20, default=u"", verbose_name=u"课程类别")
     tag = models.CharField(max_length=15, verbose_name=u"课程标签", default=u"")
+    teacher = models.ForeignKey(Teacher, verbose_name=u"讲师", on_delete=models.CASCADE, null=True, blank=True)
+    you_need_know = models.CharField(max_length=300, default=u"一颗勤学的心是本课程必要前提", verbose_name=u"课前须知")
+    teacher_tell = models.CharField(max_length=300, default=u"按时交作业，不然叫家长", verbose_name=u"老师告诉你")
 
     # 获取课程章节数的方法
     def get_zj_nums(self):
@@ -78,6 +82,8 @@ class Video(models.Model):
     name = models.CharField(max_length=100, verbose_name=u"视频名")
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"该视频添加的时间")
     url = models.CharField(max_length=200, default="http://blog.mtianyan.cn/", verbose_name=u"访问地址")
+    # 使用分钟做后台记录(存储最小单位)前台转换
+    learn_times = models.IntegerField(default=0, verbose_name=u"学习时长(分钟数)")
 
     class Meta:
         verbose_name = u"视频"
@@ -98,6 +104,9 @@ class CourseResource(models.Model):
         max_length=100,
     )
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"该资源添加的时间")
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         verbose_name = u"课程资源"

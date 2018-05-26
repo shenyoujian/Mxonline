@@ -82,7 +82,10 @@ class CourseInfoView(View):
     def get(self, request, course_id):
         # 此处的id为表默认我们添加的值
         course = Course.objects.get(id=int(course_id))
+        # 下载资源
+        all_resources = CourseResource.objects.filter(course=course)
         # 是否收藏课程
         return render(request, "course-video.html", {
             "course": course,
+            "all_resources": all_resources,
         })
