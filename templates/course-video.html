@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}{% endblock %}
+{% load staticfiles %}
+
+{% block title %}
+    公开课视频信息 | shenyoujian慕课小站
+{% endblock %}
+
+<!--crumbs start-->
+{% block custom_bread %}
+        <section>
+	<div class="wp">
+		<div class="crumbs">
+			<ul>
+				<li><a href="{% url 'index' %}">首页</a>></li>
+                <li><a href="{% url 'course:list' %}">公开课程</a>></li>
+				<li><a href="{% url 'course:course_detail' course.id %}">{{ course.name }}</a>></li>
+                <li>章节信息</li>
+			</ul>
+		</div>
+	</div>
+</section>
+{% endblock %}
+
+{% block custom_css %}
+     <link rel="stylesheet" type="text/css" href="{% static 'css/muke/base.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/muke/common-less.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/muke/course/learn-less.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/mooc.css' %}" />
+     <link rel="stylesheet" type="text/css" href="{% static 'css/muke/course/common-less.css' %}">
+{% endblock %}
+
+{% block content %}
+{% endblock %}
+
+

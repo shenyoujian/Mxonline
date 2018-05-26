@@ -75,3 +75,14 @@ class CourseDetailView(View):
             "has_fav_course":has_fav_course,
             "has_fav_org":has_fav_org,
         })
+
+
+# 处理课程章节信息页面的view
+class CourseInfoView(View):
+    def get(self, request, course_id):
+        # 此处的id为表默认我们添加的值
+        course = Course.objects.get(id=int(course_id))
+        # 是否收藏课程
+        return render(request, "course-video.html", {
+            "course": course,
+        })

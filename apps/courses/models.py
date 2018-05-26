@@ -77,6 +77,7 @@ class Video(models.Model):
     lesson = models.ForeignKey(Lesson,  on_delete=models.CASCADE, verbose_name=u"章节")
     name = models.CharField(max_length=100, verbose_name=u"视频名")
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"该视频添加的时间")
+    url = models.CharField(max_length=200, default="http://blog.mtianyan.cn/", verbose_name=u"访问地址")
 
     class Meta:
         verbose_name = u"视频"
