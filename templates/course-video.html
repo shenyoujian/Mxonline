@@ -66,7 +66,7 @@
                 <div class="mod-tab-menu">
                     <ul class="course-menu clearfix">
                         <li><a class="ui-tabs-active active" id="learnOn"  href="{% url 'course:course_info' course.id %}"><span>章节</span></a></li>
-                        <li><a id="commentOn" class="" href="#"><span>评论</span></a></li>
+                        <li><a id="commentOn" class="" href="{% url "courses:course_comments" course.id %}"><span>评论</span></a></li>
                     </ul>
                 </div>
                 <div id="notice" class="clearfix">
@@ -170,5 +170,47 @@
 </div>
 </div>
 {% endblock %}
+
+<script type="text/javascript">
+    // 添加评论
+    $('#js-pl-submit').on('click', function(){
+        var comments = $("#js-pl-textarea").val()
+        if(comments == ""){
+            alert("评论不能为空")
+            return
+        }
+        $.ajax(
+            {
+                cache:false,
+                type: "POST",
+                url:"{% url 'course:add_comment' %}",
+                data:{'course_id':{{ course.id }}, 'comments':comments},
+                async:true,
+                beforeSend:function(xhr, settings){
+                    xhr.setRequestHeader("X-CSRFToken","{{ csrf_token }}");
+                },
+                success: function(data){
+                    if(data.status == 'fail'){
+                        if(data.msg() == '用户未登陆'){
+                            window.location.href='/login';
+                        }else{
+                            alert(data.msg)
+                        }else if(data.status == 'success'){
+                            window.location.reload(); //刷新当前页面
+                        }
+                    }
+                }
+            }
+        )
+    })
+</script>
+
+
+
+
+
+
+
+
 
 
