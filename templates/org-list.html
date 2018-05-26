@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+
 {% block title %}
 机构列表页 | shenyoujian慕课小站
 {% endblock %}
@@ -6,6 +7,14 @@
 {% load staticfiles %}
 <!--crumbs start-->
 {% block custom_bread %}
+    <section>
+        <div class="wp">
+            <ul  class="crumbs">
+                <li><a href="{% url 'index' %}">首页</a>></li>
+                <li>课程机构</li>
+            </ul>
+        </div>
+    </section>
 {% endblock %}
 {% block content %}
     <section>
@@ -16,7 +25,7 @@
 				<li>
 					<h2>机构类别</h2>
 					<div class="cont">
-                        <a href="?city="><span class="{% ifequal category "" %}active2{% endifequal %}">全部</span></a>
+                        <a href="?city={{ city_id }}"><span class="{% ifequal category "" %}active2{% endifequal %}">全部</span></a>
 
                             <a href="?ct=pxjq&city={{ city.id }}"><span class="">培训机构</span></a>
 
@@ -34,7 +43,6 @@
                         {% for city in all_citys %}
                             <a href="?city={{ city.id }}"><span class={{ category }}"{% ifequal city.id|stringformat:"i" city_id %}active2{% endifequal %}">{{ city.name }}</span> </a>
                         {% endfor %}
-
 					</div>
 				</li>
 			</ul>
@@ -44,7 +52,7 @@
 		<div class="layout">
 			<div class="head">
 				<ul class="tab_header">
-					<li class="{% ifequal sort "" %}active{% endifequal %}"><a href="?ct=&city=">全部</a> </li>
+					<li class="{% ifequal sort "" %}active{% endifequal %}"><a href="?ct={{ category }}&city={{ city_id }}">全部</a> </li>
 					<li class="{% ifequal sort "students" %}active{% endifequal %}"><a href="?sort=students&ct={{ category }}&city={{ city_id }}">学习人数 &#8595;</a></li>
 					<li class="{% ifequal sort "courses" %}active{% endifequal %}"><a href="?sort=courses&ct={{ category }}&city={{ city_id }}">课程数 &#8595;</a></li>
 				</ul>
@@ -53,13 +61,13 @@
                 {% for course_org in all_orgs.object_list %}
                 <dl class="des difdes">
                     <dt>
-                        <a href="org-detail-homepage.html">
+                        <a href="{% url "org:org_home" course_org.id %}">
                             <img width="200" height="120" class="scrollLoading" data-url="{{ MEDIA_URL }}{{ course_org.image }}"/>
                         </a>
                     </dt>
                     <dd>
                         <div class="clearfix">
-                             <a href="org-detail-homepage.html">
+                             <a href="{% url "org:org_home" course_org.id %}">
                                  <h1>{{ course_org.name }}</h1>
                                  <div class="pic fl">
 
@@ -71,13 +79,12 @@
                              </a>
                         </div>
                         <ul class="cont">
-                            <li class="first"><p class="pic9">课程数：<span>1</span></p><p class="c7">学习人数：<span>1000</span></p></li>
+                            <li class="first"><p class="pic9">课程数：<span>{{ course_org.course_nums }}</span></p><p class="c7">学习人数：<span>{{ course_org.students }}</span></p></li>
                             <li class="c8" style="padding-left:18px;">北京市海淀区中关村北大街</li>
                             <li class="pic10" style="padding-left:18px;">经典课程：
-
-                                    <a href="/diary/19/">c语言基础入门</a>
-
-                                    <a href="/diary/16/">数据库基础</a>
+                                {% for course in course_org.course_set.get_queryset %}
+                                    <a href="#">{{ course.name }}</a>
+                                 {% endfor %}
 
                             </li>
                         </ul>
@@ -135,14 +142,15 @@
 		<div class="right companyrank layout">
 			<div class="head">授课机构排名</div>
 
-
+            {% for current_org in hot_orgs %}
                 <dl class="des">
                     <dt class="num fl">{{ forloop.counter }}</dt>
                     <dd>
-                        <a href="/company/2/"><h1>慕课网</h1></a>
-                        <p>北京市</p>
+                        <a href="{% url 'org:org_home' current_org.id %}"><h1>{{ current_org.name }}</h1></a>
+                        <p>{{ current_org.address }}</p>
                     </dd>
                 </dl>
+            {% endfor %}
 		</div>
         </div>
 </section>

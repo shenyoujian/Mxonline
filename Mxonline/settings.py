@@ -31,10 +31,13 @@ SECRET_KEY = 't$8xe&0-a#91(*o)=h78n6#jfx%d@-mrbiikumaf$fm2c1@i_)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
 
 # Application definition
+# 设置邮箱和用户名均可登录
+AUTHENTICATION_BACKENDS = (
+    'users.views.CustomBackend',
+)
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -52,6 +55,10 @@ INSTALLED_APPS = [
     'captcha',
     'pure_pagination',
 ]
+
+# 此处重载是为了使我们的UserProfile生效
+AUTH_USER_MODEL = "users.UserProfile"
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -76,6 +83,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.i18n',
                 # 添加图片处理器，为了在课程机构列表前面加上MEDIA_URL
                 'django.template.context_processors.media',
             ],
@@ -141,18 +149,10 @@ USE_TZ = False
 
 # 说明静态文件放在哪个目录
 STATIC_URL = '/static/'
-
-STATICFILES_DIRS = (
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
-)
-
-# 此处重载是为了使我们的UserProfile生效
-AUTH_USER_MODEL = "users.UserProfile"
-
-# 设置邮箱和用户名均可登录
-AUTHENTICATION_BACKENDS = (
-    'users.views.CustomBackend',
-)
+]
 
 # 发送邮件的setting设置
 EMAIL_HOST = "smtp.qq.com"

@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import datetime
+from organization.models import CourseOrg
 # Create your models here.
 
 
@@ -28,6 +29,22 @@ class Course(models.Model):
     # 保存点击量，点击页面就算
     click_nums = models.IntegerField(default=0, verbose_name=u"点击数")
     add_time  = models.DateTimeField(default=datetime.now, verbose_name=u"课程添加的时间")
+    course_org = models.ForeignKey(CourseOrg, on_delete=models.CASCADE, verbose_name=u"所属机构", null=True, blank=True)
+    category = models.CharField(max_length=20, default=u"", verbose_name=u"课程类别")
+    tag = models.CharField(max_length=15, verbose_name=u"课程标签", default=u"")
+
+    # 获取课程章节数的方法
+    def get_zj_nums(self):
+        return self.lesson_set.all().count()
+
+    # 获取学习这门课程的用户
+    def get_learn_users(self):
+        # 谁的里面添加了它做外键，他都可以取出来
+        return self.usercourse_set.all()[:5]
+
+    # 教师数自定义函数
+    def get_teacher_nums(self):
+        return self.teacher_set.all().count
 
     def __str__(self):
         return '{0}'.format(self.name)
