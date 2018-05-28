@@ -75,6 +75,7 @@ class Teacher(models.Model):
         verbose_name=u"头像",
         max_length=100
     )
+    age = models.IntegerField(default=18, verbose_name=u"年龄")
 
     def __str__(self):
         return '{0}'.format(self.name)

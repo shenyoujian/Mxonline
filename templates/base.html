@@ -92,10 +92,10 @@
 									公开课<img class="hot" src="{% static 'images/nav_hot.png' %}">
 								</a>
 							</li>
-							<li
+							<li {% ifequal '/org/teacher' request.path|slice:":12" %}
 							 class="active"
-							>
-								<a href="#">授课教师</a>
+							{% endifequal %}>
+								<a href="{% url "org:teacher_list" %}">授课教师</a>
 							</li>
 							<li {% ifequal  '/org/list' request.path|slice:":9" %}
 							 class="active"

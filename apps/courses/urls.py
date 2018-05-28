@@ -3,7 +3,8 @@
 # @Time    : 2018/5/25 0:21
 # @Author  : shenyoujian
 # @description :
-from courses.views import CourseListView, CourseDetailView, CourseInfoView, CommentsView, AddCommentsView
+from .views import CourseListView, CourseDetailView, CourseInfoView, CommentsView, AddCommentsView, VideoPlayView
+
 from django.urls import path, re_path
 app_name = "courses"
 urlpatterns = [
@@ -14,7 +15,9 @@ urlpatterns = [
     # 课程章节信息页
     re_path('info/(?P<course_id>\d+)/', CourseInfoView.as_view(), name="course_info"),
     # 课程章节信息页
-    re_path('comments/(?P<course_id>\d+)', CommentsView.as_view(), name="course_comments"),
+    re_path('comments/(?P<course_id>\d+)/', CommentsView.as_view(), name="course_comments"),
     # 添加课程评论，已经把参数放到post当中了
-    path('add_comment/', AddCommentsView.as_view(), name="add_comment")
+    path('add_comment/', AddCommentsView.as_view(), name="add_comment"),
+    # 课程视频播放页
+    re_path('video/(?P<video_id>\d+)/', VideoPlayView.as_view(), name="video_play"),
 ]

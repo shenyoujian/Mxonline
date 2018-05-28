@@ -4,7 +4,7 @@
 # @Author  : shenyoujian
 # @description :
 from organization.views import OrgView, OrgDescView, OrgTeacherView, AddFavView, \
-    AddUserAskView, OrgCourseView, OrgHomeView
+    AddUserAskView, OrgCourseView, OrgHomeView, TeacherListView, TeacherDetailView
 from django.urls import path, re_path
 
 app_name = "organization"
@@ -24,4 +24,11 @@ urlpatterns = [
     re_path('teacher/(?P<org_id>\d+)/', OrgTeacherView.as_view(), name="org_teacher"),
     # 机构收藏
     path('add_fav/', AddFavView.as_view(), name="add_fav"),
+    # 讲师列表
+    path('teacher_list/', TeacherListView.as_view(), name="teacher_list"),
+    # 访问机构讲师
+    # re_path('teacher/detail/(?P<teacher_id>\d+)/', TeacherListView.as_view(), name="teacher_detail"),
+    # 访问机构讲师
+    re_path('teacher/detail/(?P<teacher_id>\d+)/', TeacherDetailView.as_view(), name="teacher_detail"),
+
 ]

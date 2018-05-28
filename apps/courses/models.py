@@ -85,6 +85,9 @@ class Video(models.Model):
     # 使用分钟做后台记录(存储最小单位)前台转换
     learn_times = models.IntegerField(default=0, verbose_name=u"学习时长(分钟数)")
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         verbose_name = u"视频"
         verbose_name_plural = verbose_name
