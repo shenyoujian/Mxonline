@@ -66,7 +66,7 @@ class UserFavorite(models.Model):
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"添加时间")
 
     def __str__(self):
-        return self.fav_id
+        return '用户({0})收藏了{1} '.format(self.user, self.fav_type)
 
     class Meta:
         verbose_name = u"用户收藏"
@@ -101,12 +101,13 @@ class UserCourse(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, verbose_name=u"用户")
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"添加时间")
 
-    def __str__(self):
-        return '用户{0}-课程{1}'.format(self.user, self.course)
-
     class Meta:
         verbose_name = u"用户课程"
         verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return '用户({0})学习了{1} '.format(self.user, self.course)
+
 
 
 

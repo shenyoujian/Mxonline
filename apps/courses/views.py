@@ -14,6 +14,13 @@ class CourseListView(View):
     def get(self, request):
         all_course = Course.objects.all()
 
+        # 搜索功能
+        search_keywords = request.GET.get('keywords', '')
+        if search_keywords:
+            # 在name字段进行操作，做like语句操作，i代表不区分大小写
+            # or操作使用Q
+            all_course = all_course.filter(Q(name__icontains=search_keywords) | Q(desc__icontains=search_keywords) | Q(
+                detail__icontains=search_keywords))
         # 热门课程推荐
         hot_courses = Course.objects.all().order_by("-students")[:3]
 
@@ -39,6 +46,7 @@ class CourseListView(View):
             "all_course":courses,
             "sort":sort,
             "hot_courses":hot_courses,
+            "search_keywords":search_keywords,
         })
 
 
@@ -82,7 +90,7 @@ class CourseInfoView(LoginRequiredMixin, View):
     # 当用户没有登录的时候不能点击进入，如果是方法可以使用
     # 装饰器loginrequired，但是我们是类所以继承
     login_url = '/login/'
-    redirect_field_name = 'redirect_to'
+    redirect_field_name = 'next'
 
     def get(self, request, course_id):
         # 此处的id为表默认我们添加的值
@@ -121,7 +129,7 @@ class CommentsView(LoginRequiredMixin, View):
     # 当用户没有登录的时候不能点击进入，如果是方法可以使用
     # 装饰器loginrequired，但是我们是类所以继承
     login_url = '/login/'
-    redirect_field_name = 'redirect_to'
+    redirect_field_name = 'next'
 
     def get(self, request, course_id):
         # 此处的id为表默认为我们添加的值

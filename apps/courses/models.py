@@ -1,7 +1,6 @@
 from django.db import models
 from datetime import datetime
-from organization.models import CourseOrg
-from organization.models import Teacher
+from organization.models import CourseOrg, Teacher
 # Create your models here.
 
 
@@ -36,6 +35,7 @@ class Course(models.Model):
     teacher = models.ForeignKey(Teacher, verbose_name=u"讲师", on_delete=models.CASCADE, null=True, blank=True)
     you_need_know = models.CharField(max_length=300, default=u"一颗勤学的心是本课程必要前提", verbose_name=u"课前须知")
     teacher_tell = models.CharField(max_length=300, default=u"按时交作业，不然叫家长", verbose_name=u"老师告诉你")
+    is_banner = models.BooleanField(default=False, verbose_name=u"是否轮播")
 
     # 获取课程章节数的方法
     def get_zj_nums(self):

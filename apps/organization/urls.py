@@ -21,11 +21,11 @@ urlpatterns = [
     # 访问机构描述
     re_path('desc/(?P<org_id>\d+)/', OrgDescView.as_view(), name="org_desc"),
     # 访问机构讲师
-    re_path('teacher/(?P<org_id>\d+)/', OrgTeacherView.as_view(), name="org_teacher"),
+    re_path('org_teacher/(?P<org_id>\d+)/', OrgTeacherView.as_view(), name="org_teacher"),
     # 机构收藏
     path('add_fav/', AddFavView.as_view(), name="add_fav"),
     # 讲师列表
-    path('teacher_list/', TeacherListView.as_view(), name="teacher_list"),
+    path('teacher/list/', TeacherListView.as_view(), name="teacher_list"),
     # 访问机构讲师
     # re_path('teacher/detail/(?P<teacher_id>\d+)/', TeacherListView.as_view(), name="teacher_detail"),
     # 访问机构讲师

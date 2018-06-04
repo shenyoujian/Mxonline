@@ -5,26 +5,26 @@
 	<meta charset="UTF-8">
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
-	<title> {% block title  %}机构首页 | shenyoujian慕课小站 {% endblock %}</title>
-	<link rel="stylesheet" type="text/css" href="{% static "css/reset.css" %}">
-	<link rel="stylesheet" type="text/css" href="{% static "css/animate.css" %}">
-	<link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}">
-    <link rel="stylesheet" type="text/css" href="{% static "js/plugins/queryCity/css/cityLayout.css" %}">
-    {% block custom_css %}{% endblock %}
-
+	<title>    {% block title %} 机构首页 | shenyoujian慕课小站{% endblock %}</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'js/plugins/queryCity/css/cityLayout.css' %}">
+    {% block custom_css %} {% endblock %}
     <script src="{% static 'js/jquery.min.js' %}" type="text/javascript"></script>
     <script src="{% static 'js/jquery-migrate-1.2.1.min.js' %}" type="text/javascript"></script>
-    {% block custom_js %}{% endblock %}
+    {% block custom_js %} {% endblock %}
 </head>
 <body>
 <section class="headerwrap headerwrap2">
     <header>
 		<div  class="header2 header">
-                <div class="top">
+                     			<div class="top">
         {% if request.user.is_authenticated %}
             <div class="wp">
              <div class="fl"><p>服务电话：<b>23333333</b></p></div>
 			<div class="personal">
+
                             <dl class="user fr">
                                 <dd>{{ user.username }}<img class="down fr" src="{% static 'images/top_down.png' %}"/></dd>
                                 <dt><img width="20" height="20" src="{{ MEDIA_URL }}{{ user.image }}"/></dt>
@@ -38,12 +38,12 @@
 	                                </dd>
                                 </dl>
                                 <div class="btn">
-	                                <a class="personcenter fl" href="#">进入个人中心</a>
-	                                <a class="fr" href="#">退出</a>
+	                                <a class="personcenter fl" href="{% url 'users:user_info' %}">进入个人中心</a>
+	                                <a class="fr" href="{% url 'logout' %}">退出</a>
                                 </div>
                             </div>
                         </div>
-              <a href="#">
+              <a href="{% url 'users:my_message' %}">
                             <div class="msg-num"><span id="MsgNum">{{ request.user.unread_nums }}</span></div>
                         </a>
             </div>
@@ -52,8 +52,13 @@
 					<div class="fl"><p>服务电话：<b>23333333</b></p></div>
 					<!--登录后跳转-->
 
+
                       <a style="color:white" class="fr registerbtn" href="{% url "register" %}">注册</a>
                     <a style="color:white" class="fr loginbtn" href="{% url 'login'%}?next={{ request.path }}">登录</a>
+
+
+
+
 				</div>
 {% endif %}
 
@@ -69,8 +74,7 @@
                 </h1>
                 <p class="fl">
                     <span class="fl" style="margin-top:8px;color:#848484;">推荐指数： </span>
-                    <span class="precision company-credit" data-star-scope="5.0" style="width: 140px;">
-                    </span>
+                    <span class="precision company-credit" data-star-scope="5.0"></span>
                     <span class="key">5.0</span>
                 </p>
             </div>
@@ -78,22 +82,21 @@
                  "data-favid="22" data-fav-type="1">
                 {% if has_fav %}
                 已收藏
-                {% else %}
-                 收藏
+                    {% else %}
+                    收藏
                 {% endif %}
             </div>
 
         </div>
     </div>
 			</div>
-        </div>
     </header>
 </section>
 <section>
 	<div class="wp">
 		<ul  class="crumbs">
-            <li><a href="{% url "index" %}">首页</a>></li>
-			<li><a href="{% url "org:org_list" %}">课程机构</a>></li>
+            <li><a href="{% url 'index' %}">首页</a>></li>
+			<li><a href="{% url 'org:org_list' %}">课程机构</a>></li>
 			<li>{% block page_path %}机构首页{% endblock %}</li>
 		</ul>
 	</div>
@@ -103,15 +106,17 @@
 	<div class="wp list personal_list comp">
 		<div class="left">
 			<ul>
-				<li class="{% ifequal current_page "home" %}active2{% endifequal %}"><a href="#">机构首页</a></li>
-                <li class="{% ifequal current_page "course" %}active2{% endifequal %}"><a href="#">机构课程</a></li>
-                <li class="{% ifequal current_page "desc" %}active2{% endifequal %}"><a href="#">机构介绍</a></li>
-                <li class="{% ifequal current_page "teacher" %}active2{% endifequal %}"><a href="#">机构讲师</a></li>
+				<li class="{% ifequal current_page "home" %}active2{% endifequal %}"><a href="{% url 'org:org_home' course_org.id %}">机构首页</a></li>
+                <li class="{% ifequal current_page "course" %}active2{% endifequal %}"><a href="{% url 'org:org_course' course_org.id %}">机构课程</a></li>
+                <li class="{% ifequal current_page "desc" %}active2{% endifequal %}"><a href="{% url 'org:org_desc' course_org.id %}">机构介绍</a></li>
+                <li class="{% ifequal current_page "teacher" %}active2{% endifequal %}"><a href="{% url 'org:org_teacher' course_org.id %}">机构讲师</a></li>
 			</ul>
 		</div>
 
-    {% block right_form %}
-    {% endblock %}
+        {% block right_form %}
+
+{% endblock %}
+
 </section>
 <!--sidebar start-->
 <section>
@@ -164,7 +169,7 @@ function add_fav(current_elem, fav_id, fav_type){
 }
 
 $('.collectionbtn').on('click', function(){
-    add_fav($(this), {{ course_org.id }}, 2);
+    add_fav($(this),{{ course_org.id }}, 2);
 });
 
 $(function(){
