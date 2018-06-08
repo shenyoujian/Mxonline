@@ -157,6 +157,7 @@
 {% endblock %}
 <!--监听这个button，用户如果点击了button。我们来向这个url进行post请求。
 将我们的表单进行序列化。-->
+{% block custom_js %}
 <script>
     $(function(){
         $('#jsStayBtn').on('click', function(){
@@ -179,4 +180,6 @@
     })
 
 </script>
+{% endblock %}
+
 

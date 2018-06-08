@@ -31,7 +31,7 @@ SECRET_KEY = 't$8xe&0-a#91(*o)=h78n6#jfx%d@-mrbiikumaf$fm2c1@i_)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*',]
 
 # Application definition
 # 设置邮箱和用户名均可登录

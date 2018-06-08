@@ -75,3 +75,7 @@ urlpatterns = [
     # 退出功能url
     path('logout/', LogoutView.as_view(), name="logout"),
 ]
+
+# 全局404页面配置
+handler404 = 'users.views.page_not_found'
+handler500 = 'users.views.page_error'
