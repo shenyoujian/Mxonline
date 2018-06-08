@@ -1,5 +1,5 @@
 # Mxonline
-Python3.6+Django2.0+xadmin+Mysql的教育平台网站
+- Python3.6+Django2.0+xadmin+Mysql的教育平台网站
 ```
  $ git clone https://github.com/shenyoujian/Mxonline.git
  $ cd Mxonline
